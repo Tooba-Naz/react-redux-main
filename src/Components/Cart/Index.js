@@ -6,16 +6,16 @@ import NavBar from "../Header/Index";
 import { Button } from "../Button/Index";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import  {getCartTotal} from "../../Redux/cartSlice";
-import  {removeCartItems} from "../../Redux/cartSlice";
+import { getCartTotal } from "../../Redux/cartSlice";
+import { removeCartItems } from "../../Redux/cartSlice";
 
 const Cart = () => {
     const [quantities, setQuantities] = useState([0]);
     const dispatch = useDispatch();
-    const {items, totalquantity, totalPrice} = useSelector((state) => state.cart);
-    useEffect(()=>{
+    const { items, totalquantity, totalPrice } = useSelector((state) => state.cart);
+    useEffect(() => {
         dispatch(getCartTotal());
-     },[items])
+    }, [items])
 
     const incrementQuantity = (index) => {
         const updatedQuantities = [...quantities];
@@ -30,10 +30,27 @@ const Cart = () => {
             setQuantities(updatedQuantities);
         }
     };
-   
+
     const removeTocart = () => {
-      dispatch(removeCartItems());
-  }
+        dispatch(removeCartItems());
+    }
+    const downloadReceipt = () => {
+        const receiptContent = `
+      Receipt
+       Subtotal: ${totalPrice}
+       Shipping: 0
+       Total: ${totalPrice}
+`;
+        const blob = new Blob([receiptContent], { type: "text/plain" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "receipt.txt";
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+    };
+
 
     return (
         <>
@@ -46,34 +63,34 @@ const Cart = () => {
                 </div>
                 {items.map((data, index) => (
                     <div key={index}>
-                    <div className="w-[1170px] h-[72px] shadow  grid grid-cols-4 mt-14" >
-                        <div className="flex items-center justify-center "> <img src={data.image} alt="image" style={{width:"50px", height:"50px"}}/>
-                        <h1 className="flex items-center justify-center"> {data.title}</h1>
-                        </div>
-                        <div> <h1 className="flex items-center justify-center mt-5"> {data.newPrice}</h1></div>
-                        <div className="flex items-center justify-center mt-3"> {quantities.map((quantity, index) => (
+                        <div className="w-[1170px] h-[72px] shadow  grid grid-cols-4 mt-14" >
+                            <div className="flex items-center justify-center "> <img src={data.image} alt="image" style={{ width: "50px", height: "50px" }} />
+                                <h1 className="flex items-center justify-center"> {data.title}</h1>
+                            </div>
+                            <div> <h1 className="flex items-center justify-center mt-5"> {data.newPrice}</h1></div>
+                            <div className="flex items-center justify-center mt-3"> {quantities.map((quantity, index) => (
 
-                            <div className="w-[72px] h-[44px] ">
-                                <div className="flex items-center justify-center border border-black ">
+                                <div className="w-[72px] h-[44px] ">
+                                    <div className="flex items-center justify-center border border-black ">
 
-                                    <span>{data.quantity}</span>
-                                    <div className="relative">
-                                        <button onClick={() => incrementQuantity(index)}>
-                                            <span className="absolute top-0 left-2">
-                                                <IoMdArrowDropup />
-                                            </span>
-                                        </button>
-                                        <button className={""} onClick={() => decrementQuantity(index)}>
-                                            <span className="absolute bottom-0 left-2">
-                                                <IoMdArrowDropdown />
-                                            </span>
-                                        </button>
+                                        <span>{data.quantity}</span>
+                                        <div className="relative">
+                                            <button onClick={() => incrementQuantity(index)}>
+                                                <span className="absolute top-0 left-2">
+                                                    <IoMdArrowDropup />
+                                                </span>
+                                            </button>
+                                            <button className={""} onClick={() => decrementQuantity(index)}>
+                                                <span className="absolute bottom-0 left-2">
+                                                    <IoMdArrowDropdown />
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        ))} </div>
-                    </div>
+                            ))} </div>
+                        </div>
                     </div>
                 ))}
 
@@ -128,7 +145,7 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className="flex items-center justify-center pt-7 pb-10">
-                        <Button>Download Receipt</Button>
+                        <Button onClick={downloadReceipt}>Download Receipt</Button>
                     </div>
                 </div>
             </div>
