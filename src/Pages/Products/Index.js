@@ -3,11 +3,10 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import NavBar from "../../Components/Header/Index";
 import { Button } from "../../Components/Button/Index";
 import {addItemToCart} from "../../Redux/cartSlice";
-import { moveAll } from "../../Redux/cartSlice";
 import { useDispatch } from "react-redux";
 
 
-const Products = ({ favoritesCount }) => {
+const Products = () => {
 
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +35,7 @@ const Products = ({ favoritesCount }) => {
 
 
     return (
-        <><NavBar favoritesCount={favoritesCount} setSearchQuery={setSearchQuery} />
+        <><NavBar setSearchQuery={setSearchQuery} />
             <div className="grid grid-cols-2 pt-14">
                 <div className="flex items-start justify-start">
                     <h1 className="font-normal text-[20px] pl-44">Total Product ({products.length})</h1>

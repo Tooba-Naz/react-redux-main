@@ -16,21 +16,6 @@ const Cart = () => {
     useEffect(() => {
         dispatch(getCartTotal());
     }, [items])
-
-    const incrementQuantity = (index) => {
-        const updatedQuantities = [...quantities];
-        updatedQuantities[index] += 1;
-        setQuantities(updatedQuantities);
-    };
-
-    const decrementQuantity = (index) => {
-        const updatedQuantities = [...quantities];
-        if (updatedQuantities[index] > 0) {
-            updatedQuantities[index] -= 1;
-            setQuantities(updatedQuantities);
-        }
-    };
-
     const removeTocart = () => {
         dispatch(removeCartItems());
     }
@@ -39,8 +24,7 @@ const Cart = () => {
       Receipt
        Subtotal: ${totalPrice}
        Shipping: 0
-       Total: ${totalPrice}
-`;
+       Total: ${totalPrice}`;
         const blob = new Blob([receiptContent], { type: "text/plain" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -76,12 +60,12 @@ const Cart = () => {
 
                                         <span>{data.quantity}</span>
                                         <div className="relative">
-                                            <button onClick={() => incrementQuantity(index)}>
+                                            <button>
                                                 <span className="absolute top-0 left-2">
                                                     <IoMdArrowDropup />
                                                 </span>
                                             </button>
-                                            <button className={""} onClick={() => decrementQuantity(index)}>
+                                            <button className={""} >
                                                 <span className="absolute bottom-0 left-2">
                                                     <IoMdArrowDropdown />
                                                 </span>

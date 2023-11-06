@@ -4,12 +4,16 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { Button } from "../../Components/Button/Index";
 import Banner from "../../Components/Banner/Index";
+import {addItemToLike, removeLike} from "../../Redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [showAllProducts, setShowAllProducts] = useState(false);
     const [favorites, setFavorites] = useState([]);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,15 +29,18 @@ const Home = () => {
         fetchData();
     }, []);
 
-    const toggleFavorite = (product) => {
+   
+    const handleAddToCart = (product) => {
+        dispatch(addItemToLike (product));
         if (favorites.includes(product)) {
             setFavorites(favorites.filter((item) => item !== product));
         } else {
             setFavorites([...favorites, product]);
         }
-    };
-
-
+      };
+      const removeLikeItems = (product) => {
+        dispatch(removeLike(product));
+    }
 
     return (
         <>
@@ -57,7 +64,7 @@ const Home = () => {
                                                 color="red"
                                                 size={'20'}
                                                 className="flex items-center justify-center bottom-4"
-                                                onClick={() => toggleFavorite(product)}
+                                                onClick={() => removeLikeItems(product)}
                                             />
                                         </span>
                                     ) : (
@@ -65,7 +72,7 @@ const Home = () => {
                                             <AiOutlineHeart
                                                 size={'20'}
                                                 className="flex items-center justify-center"
-                                                onClick={() => toggleFavorite(product)}
+                                                onClick={() => handleAddToCart(product)}
                                             />
                                         </span>
                                     )}

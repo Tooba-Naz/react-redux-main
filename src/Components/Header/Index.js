@@ -6,13 +6,17 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../Redux/cartSlice";
+import { getLike } from "../../Redux/cartSlice";
 
 const NavBar = ({ favoritesCount, setSearchQuery }) => {
-    const { items, totalquantity } = useSelector((state) => state.cart);
+    const { items, totalquantity,fav, totalLike } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCartTotal());
     }, [items])
+    useEffect(() => {
+        dispatch(getLike());
+    }, [fav])
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -54,7 +58,7 @@ const NavBar = ({ favoritesCount, setSearchQuery }) => {
                             <div className="flex items-center space-x-1">
                                 <AiOutlineHeart size={'25'} />
                                 <span className="bg-red-500 h-4 w-4 text-sm rounded-full text-white flex items-center justify-center absolute top-1 right-[-4px]">
-                                    {favoritesCount}
+                                {totalLike}
                                 </span>
                             </div>
                         </div>

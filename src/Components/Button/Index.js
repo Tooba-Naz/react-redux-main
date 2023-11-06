@@ -5,7 +5,7 @@ const varients = {
     danger: "bg-red-600 text-white hover:anabled:bg-red-700 focus:ring-red-500",
     naked: "hover:text-gray-600 text-gray-500 shadow-none",
     addToCart:"text-white bg-black h-10 w-[270px] font-medium rounded-none text-white",
-    allToCart:"bg-white  border-black h-[56px] w-[227px] font-medium rounded-none text-black",
+    allToCart:"border-[#000000] h-[56px] w-[227px] font-medium rounded-none text-black",
     shopNow:"bg-black text-white text-lg rounded-none pt-2 border-1 w-28 border-b-white",
     formButton:"text-white bg-gray-500 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm",
 };
